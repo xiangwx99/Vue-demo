@@ -1,30 +1,31 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <div class="nav-left">
+      <router-link to="/multistage-list">多级列表</router-link>
+    </div>
+    <div class="nav-content">
+      <router-view />
+    </div>
   </div>
-  <router-view/>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
+<style lang="scss">
+@import "./assets/css/base.css";
 #nav {
-  padding: 30px;
+  display: flex;
+  justify-content: space-between;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.nav-left {
+  width: 150px;
+  height: 100vh;
+  border-right: 1px solid #ececee;
+  padding-left: 16px;
+  line-height: 36px;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.nav-content {
+  width: calc(100% - 150px);
+  height: 100vh;
+}
+.router-link-active {
+  color: skyblue;
 }
 </style>
