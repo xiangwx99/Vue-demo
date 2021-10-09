@@ -3,12 +3,13 @@
     <div
       class="image-box"
       :style="{
-        top: position.top + 'px',
-        left: position.left + 'px',
-        transform: `scale(${zoom})`,
+        width: imgBoxInfo.width * zoom + 'px',
+        height: imgBoxInfo.height * zoom + 'px',
+        top: imgBoxInfo.top + 'px',
+        left: imgBoxInfo.left + 'px',
       }"
     >
-      <div style="width: 100px; height: 100px; background: red"></div>
+      <!-- <div style="width: 100px; height: 100px; background: red"></div> -->
     </div>
   </div>
 </template>
@@ -19,7 +20,10 @@ import { limitImage, calcScaleSpeed } from "./util";
 export default {
   setup() {
     const NAV_LEFT = 150;
-    const position = reactive({
+    // 元素的信息
+    const imgBoxInfo = reactive({
+      height: 300,
+      width: 300,
       top: 0,
       left: 0,
     });
@@ -27,8 +31,9 @@ export default {
 
     onMounted(() => {
       // 居中显示
-      position.top = document.body.clientHeight / 2 - 150;
-      position.left = (document.body.clientWidth - NAV_LEFT) / 2 - 150;
+      imgBoxInfo.top = document.body.clientHeight / 2 - imgBoxInfo.height / 2;
+      imgBoxInfo.left =
+        (document.body.clientWidth - NAV_LEFT) / 2 - imgBoxInfo.width / 2;
     });
 
     const handleMousewheel = (event) => {
@@ -48,19 +53,18 @@ export default {
         return;
       }
       // 处理元素的移动
-      position.top = limitImage(
-        position.top - event.deltaY,
+      imgBoxInfo.top = limitImage(
+        imgBoxInfo.top - event.deltaY,
         "top",
-        300 * zoom.value,
+        null,
+        imgBoxInfo.height * zoom.value
+      );
+      imgBoxInfo.left = limitImage(
+        imgBoxInfo.left - event.deltaX,
+        "left",
+        imgBoxInfo.width * zoom.value,
         null
       );
-      position.left = limitImage(
-        position.left - event.deltaX,
-        "left",
-        null,
-        450 * zoom.value
-      );
-      console.log(position);
     };
 
     // 放大缩小图片
@@ -68,11 +72,17 @@ export default {
       let zoomSize = zoom.value + val;
       zoomSize = Math.min(zoomSize, 2);
       zoomSize = Math.max(0.02, zoomSize);
+      console.log(e);
+      /**
+       * 计算放大后图片的位置和大小
+       *  1. 计算起初图片相对于鼠标的位置
+       * **/
+
+      // 修改此时的放大倍数
       zoom.value = zoomSize;
-      console.log(zoomSize, e);
     };
 
-    return { position, handleMousewheel, zoom };
+    return { imgBoxInfo, handleMousewheel, zoom };
   },
 };
 </script>

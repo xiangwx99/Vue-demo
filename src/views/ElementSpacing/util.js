@@ -1,14 +1,14 @@
 // 限制图片的位置 ===> 始终在可滚动区
 export const limitImage = (spacing, type, width = 450, height = 300) => {
   if (type === "left") {
-    const MAX_LEFT = document.body.clientWidth - width;
+    const MAX_LEFT = document.body.clientWidth + width - 150;
     if (spacing > MAX_LEFT) return MAX_LEFT;
-    if (spacing < 0) return 0;
+    if (spacing < -width) return -width;
     return spacing;
   } else if (type === "top") {
-    const MAX_TOP = document.body.clientHeight - height;
+    const MAX_TOP = document.body.clientHeight + height;
     if (spacing > MAX_TOP) return MAX_TOP;
-    if (spacing < 0) return 0;
+    if (spacing < -height) return -height;
     return spacing;
   }
 };
