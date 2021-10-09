@@ -2,6 +2,7 @@
   <div id="nav">
     <div class="nav-left">
       <router-link to="/multistage-list">多级列表</router-link>
+      <router-link to="/element-spacing">元素间距</router-link>
     </div>
     <div class="nav-content">
       <router-view />
@@ -20,6 +21,9 @@
   border-right: 1px solid #ececee;
   padding-left: 16px;
   line-height: 36px;
+  a {
+    display: block;
+  }
 }
 .nav-content {
   width: calc(100% - 150px);

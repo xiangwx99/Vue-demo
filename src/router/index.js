@@ -8,6 +8,13 @@ const routes = [
         /* webpackChunkName: "about" */ "../views/MultistageList/index.vue"
       ),
   },
+  {
+    path: "/element-spacing",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/ElementSpacing/index.vue"
+      ),
+  },
 ];
 
 const router = createRouter({
