@@ -3,6 +3,7 @@
     <div class="nav-left">
       <router-link to="/multistage-list">多级列表</router-link>
       <router-link to="/element-spacing">元素间距</router-link>
+      <router-link to="/virtual-list">虚拟列表</router-link>
     </div>
     <div class="nav-content">
       <router-view />

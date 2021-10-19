@@ -77,7 +77,16 @@ export default {
        * 计算放大后图片的位置和大小
        *  1. 计算起初图片相对于鼠标的位置
        * **/
-
+      let ratioL =
+        (e.clientX - imgBoxInfo.left - NAV_LEFT) /
+        (imgBoxInfo.width * zoom.value);
+      let ratioT =
+        (e.clientY - imgBoxInfo.top) / (imgBoxInfo.height * zoom.value);
+      console.log(ratioL, ratioT);
+      // let left = e.clientX - imgBoxInfo.width * zoomSize * ratioL;
+      // let top = e.clientY - imgBoxInfo.height * zoomSize * ratioT;
+      // imgBoxInfo.left = left;
+      // imgBoxInfo.top = top;
       // 修改此时的放大倍数
       zoom.value = zoomSize;
     };
