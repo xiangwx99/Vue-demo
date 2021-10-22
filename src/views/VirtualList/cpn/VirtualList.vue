@@ -26,7 +26,7 @@
 <script>
 import { ref, reactive, computed, onMounted, onUpdated, onBeforeUpdate, nextTick } from "vue";
 export default {
-  props: ["dataList", "itemSize"],
+  props: ["dataList", "itemSize", 'bufferScale'],
   setup(props) {
     const setItemRef = el => el && itemRefs.push(el)
     const rootElement = ref(null);
@@ -45,6 +45,8 @@ export default {
     let start = ref(0);
     //结束索引
     let end = ref(null);
+    //缓冲区比例
+    const bufferScale = ref(props.bufferScale || 1)
     // 列表总高度
     const listHeight = computed(() => listData.length * itemSize.value);
     //可显示的列表项数
@@ -56,9 +58,12 @@ export default {
       () => `translate3d(0,${startOffset.value}px,0)`
     );
     //获取真实显示列表数据
-    const visibleData = computed(() =>
-      listData.slice(start.value, Math.min(end.value, listData.length))
-    );
+    const visibleData = computed(() => {
+        let startAt = start.value - aboveCount.value;
+        let endAt = end.value + belowCount.value;
+        return listData.slice(startAt, Math.min(endAt, listData.length))
+      }
+    )
 
     // 初始化高度
     const initPositions = function() {
@@ -143,6 +148,12 @@ export default {
       //二分法查找
       return binarySearch(positions, scrollTop);
     }
+
+    // 可视区上方条数
+    const aboveCount = computed(() => Math.min(start.value, bufferScale.value * visibleCount.value))
+
+    // 可视区下方条数
+    const belowCount = computed(() => Math.min(listData.length - end.value, bufferScale.value * visibleCount.value))
 
     const binarySearch = function (list, value) {
       let start = 0;
