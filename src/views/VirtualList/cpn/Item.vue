@@ -1,11 +1,17 @@
 <template>
-  <div></div>
+  <div>
+    <span style="color: skyblue">{{ itemData.id }} </span>
+    {{ itemData.value }}
+  </div>
 </template>
 
 <script>
+import { reactive, } from "vue";
 export default {
-  setup() {
-    return {};
+  props: ["item"],
+  setup(props) {
+    const itemData = reactive(props.item);
+    return { itemData };
   },
 };
 </script>
